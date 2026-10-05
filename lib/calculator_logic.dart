@@ -1,6 +1,9 @@
 /// Pure calculator state machine (no Flutter dependency, easy to test).
 class CalculatorLogic {
   String display = '0';
+
+  /// Completed calculations, oldest first.
+  final List<({String expression, String result})> history = [];
   String? _operator;
   double? _operand;
   bool _resetOnNextDigit = false;
@@ -95,6 +98,7 @@ class CalculatorLogic {
         result = a / b;
     }
     display = _format(result);
+    history.add((expression: '${_format(a)} $op ${_format(b)}', result: display));
     _operator = null;
     _operand = null;
     _resetOnNextDigit = true;
